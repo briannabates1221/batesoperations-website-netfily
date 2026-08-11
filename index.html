@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bates Operations | Operational Leak Diagnosis</title>
+<meta name="description" content="Bates Operations helps STR and MTR operators identify the manual handoffs, vendor exceptions, and scaling friction that put revenue and capacity at risk.">
+<link rel="icon" type="image/png" href="bates-operations-favicon.png">
+<style>
+:root{
+  --ink:#061a33;
+  --navy:#082442;
+  --navy-soft:#123456;
+  --gold:#d8ad25;
+  --gold-soft:#f3d978;
+  --paper:#f8fafc;
+  --surface:#ffffff;
+  --mist:#eef3f7;
+  --line:#d9e2ea;
+  --muted:#617083;
+  --danger:#a4471d;
+  --shadow:0 20px 55px rgba(6,26,51,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Aptos,Inter,Segoe UI,Roboto,Arial,sans-serif;
+  line-height:1.5;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,a.button{font:inherit}
+.site-shell{min-height:100vh;overflow-x:hidden}
+.container{width:min(1160px,calc(100% - 40px));margin:0 auto}
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(248,250,252,.94);
+  border-bottom:1px solid rgba(217,226,234,.8);
+  backdrop-filter:blur(16px);
+}
+.nav{
+  min-height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.brand-link{display:flex;align-items:center;text-decoration:none;min-width:0}
+.brand-logo{width:260px;height:auto}
+.nav-links{display:flex;align-items:center;gap:26px;color:var(--muted);font-size:15px;font-weight:650}
+.nav-links a{text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  border:1px solid transparent;
+  border-radius:8px;
+  padding:13px 18px;
+  font-weight:800;
+  text-decoration:none;
+  cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease;
+}
+.button:hover{transform:translateY(-1px)}
+.button.primary{background:var(--gold);color:#071b32;box-shadow:0 10px 24px rgba(216,173,37,.25)}
+.button.primary:hover{background:#e2b92e}
+.button.secondary{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.button.secondary:hover{border-color:#b9c6d1;box-shadow:0 10px 26px rgba(6,26,51,.08)}
+.hero{
+  padding:76px 0 62px;
+  background:
+    linear-gradient(90deg,rgba(8,36,66,.06) 1px,transparent 1px),
+    linear-gradient(180deg,#fff 0%,#f7f9fb 72%,#edf3f8 100%);
+  background-size:72px 72px,auto;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.04fr) minmax(340px,.76fr);
+  gap:54px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 18px;
+  color:var(--navy-soft);
+  font-size:13px;
+  font-weight:850;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.eyebrow:before{content:"";width:42px;height:3px;background:var(--gold)}
+h1,h2,h3,p{margin-top:0}
+h1{
+  max-width:760px;
+  margin-bottom:22px;
+  font-size:clamp(42px,7vw,86px);
+  line-height:.95;
+  letter-spacing:0;
+}
+.hero-copy{max-width:680px;margin-bottom:28px;color:#3f4f62;font-size:20px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+.proof-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:730px}
+.proof{
+  border-left:3px solid var(--gold);
+  background:rgba(255,255,255,.76);
+  padding:12px 14px;
+  min-height:86px;
+}
+.proof strong{display:block;margin-bottom:4px;font-size:15px}
+.proof span{display:block;color:var(--muted);font-size:13px}
+.diagnostic-panel{
+  position:relative;
+  background:var(--navy);
+  color:#f7fbff;
+  border-radius:8px;
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+.diagnostic-panel:before{
+  content:"";
+  position:absolute;
+  inset:18px auto 18px -7px;
+  width:7px;
+  background:var(--gold);
+}
+.panel-logo{
+  background:#fff;
+  border-radius:6px;
+  padding:18px;
+  margin-bottom:28px;
+}
+.panel-title{margin-bottom:8px;font-size:13px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:#c8d4df}
+.leak-list{display:grid;gap:12px;margin:0 0 24px;padding:0;list-style:none}
+.leak-list li{
+  display:grid;
+  grid-template-columns:92px 1fr;
+  gap:14px;
+  align-items:center;
+  padding:12px 0;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.leak-list b{color:var(--gold-soft);font-size:15px}
+.leak-list span{font-size:15px;color:#e5eef6}
+.panel-note{
+  margin:0;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.16);
+  color:#c8d4df;
+  font-size:14px;
+}
+.section{padding:72px 0}
+.section.alt{background:#fff}
+.section-heading{display:grid;grid-template-columns:minmax(0,.8fr) minmax(280px,.7fr);gap:40px;align-items:end;margin-bottom:34px}
+.label{
+  margin-bottom:10px;
+  color:var(--navy-soft);
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+h2{font-size:clamp(30px,4vw,48px);line-height:1.02;margin-bottom:0}
+.section-heading p{margin:0;color:var(--muted);font-size:18px}
+.leak-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.leak-card{
+  min-height:230px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:22px;
+  box-shadow:0 12px 30px rgba(6,26,51,.05);
+}
+.leak-card h3{font-size:20px;margin-bottom:10px}
+.leak-card p{margin:0;color:var(--muted);font-size:15px}
+.leak-card .marker{
+  width:40px;
+  height:4px;
+  background:var(--gold);
+  margin-bottom:28px;
+}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.method-list{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.method-list li{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:16px;
+  align-items:start;
+  padding:18px;
+  background:var(--mist);
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+.method-list b{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  border-radius:8px;
+  background:var(--navy);
+  color:#fff;
+}
+.method-list h3{margin-bottom:4px;font-size:19px}
+.method-list p{margin:0;color:var(--muted)}
+.cta-band{
+  background:var(--navy);
+  color:#fff;
+  border-radius:8px;
+  padding:34px;
+  min-height:100%;
+}
+.cta-band h2{font-size:34px;margin-bottom:12px}
+.cta-band p{color:#d8e3ed;font-size:17px;margin-bottom:22px}
+.diagnosis-shell{
+  display:none;
+  padding:72px 0 80px;
+  background:linear-gradient(180deg,#071b32 0%,#0d2746 100%);
+  color:#f6f9fc;
+}
+.diagnosis-shell.is-open{display:block}
+.diagnosis-wrap{width:min(860px,calc(100% - 40px));margin:0 auto}
+.diagnosis-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
+.diagnosis-logo{
+  width:220px;
+  background:#fff;
+  border-radius:6px;
+  padding:10px;
+}
+.diagnosis-title h2{margin-bottom:12px;color:#fff}
+.diagnosis-title p{max-width:720px;margin:0;color:#cfdae5;font-size:18px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 24px}
+.pill{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  padding:7px 10px;
+  border-radius:999px;
+  color:#e8f0f8;
+  font-size:13px;
+}
+.quiz-card,.result-card{
+  background:rgba(255,255,255,.98);
+  color:var(--ink);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:8px;
+  padding:22px;
+  margin:16px 0;
+}
+.qnum{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-soft);font-weight:850}
+.q{font-size:20px;font-weight:800;margin:6px 0 14px}
+.options{display:grid;gap:10px}
+.opt{
+  display:flex;
+  gap:10px;
+  background:#f5f8fb;
+  border:1px solid var(--line);
+  padding:13px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.opt:hover{border-color:#9eb0c0;background:#fff}
+input[type=radio]{margin-top:3px;accent-color:var(--gold)}
+.form-submit{width:100%;border:0}
+.error{display:none;color:#ffd1c2;margin-top:12px;font-size:14px;font-weight:750}
+#result{display:none}
+.scoregrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.metric{background:#f3f6f9;border:1px solid var(--line);border-radius:8px;padding:16px}
+.metric-label{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:850}
+.value{font-size:30px;font-weight:850;margin-top:3px}
+.risk{font-size:clamp(34px,7vw,54px);font-weight:900;line-height:1.05;margin:6px 0;color:var(--navy)}
+.lead{font-size:17px;color:#415064}
+.leak{color:var(--danger)}
+.result-actions{margin-top:20px}
+.result-actions h3{margin:0 0 6px;font-size:24px}
+.fine{font-size:12px;color:#6e7b8a;margin-top:16px}
+.site-footer{padding:32px 0;color:#6b7888;background:#fff;border-top:1px solid var(--line);font-size:14px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media (max-width:900px){
+  .nav{align-items:flex-start;flex-direction:column;padding:18px 0}
+  .nav-links{width:100%;justify-content:space-between;gap:14px;overflow-x:auto;padding-bottom:4px}
+  .hero{padding-top:48px}
+  .hero-grid,.section-heading,.method-grid{grid-template-columns:1fr}
+  .diagnostic-panel{max-width:560px}
+  .leak-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .container,.diagnosis-wrap{width:min(100% - 28px,1160px)}
+  .brand-logo{width:220px}
+  .nav-links a:not(.button){display:none}
+  .hero-actions,.proof-row,.leak-grid,.scoregrid{grid-template-columns:1fr}
+  .button{width:100%}
+  .proof-row{display:grid}
+  .leak-list li{grid-template-columns:1fr}
+  .diagnosis-head{display:grid}
+  .diagnosis-logo{width:190px}
+  .section{padding:54px 0}
+  .quiz-card,.result-card,.cta-band{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="site-shell">
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand-link" href="#top" aria-label="Bates Operations home">
+        <img class="brand-logo" src="bates-operations-logo.png" alt="Bates Operations">
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#leaks">Leaks</a>
+        <a href="#method">Method</a>
+        <a class="button primary" href="#diagnosis" data-open-diagnosis>Start diagnosis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Operational leak diagnosis</p>
+          <h1>Find the handoffs that make growth expensive.</h1>
+          <p class="hero-copy">Bates Operations helps STR and MTR teams spot the manual follow-up, vendor exceptions, and unclear ownership that quietly drain margin, response speed, and capacity.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#diagnosis" data-open-diagnosis>Start the diagnosis</a>
+            <a class="button secondary" href="https://calendly.com/briannabates36/15-minute-free-consultation" target="_blank" rel="noopener noreferrer">Book an operations review</a>
+          </div>
+          <div class="proof-row" aria-label="Common operational pressure points">
+            <div class="proof"><strong>Manual coordination</strong><span>Updates, confirmations, and reminders that live in chats and inboxes.</span></div>
+            <div class="proof"><strong>Missed handoffs</strong><span>Work slows when ownership, status, or next steps are unclear.</span></div>
+            <div class="proof"><strong>Scaling friction</strong><span>Growth creates staffing pressure before systems are ready.</span></div>
+          </div>
+        </div>
+        <aside class="diagnostic-panel" aria-label="Operational diagnosis preview">
+          <div class="panel-logo">
+            <img src="bates-operations-logo.png" alt="Bates Operations logo">
+          </div>
+          <p class="panel-title">Diagnosis reads</p>
+          <ul class="leak-list">
+            <li><b>Admin load</b><span>How much team time is spent chasing the work.</span></li>
+            <li><b>Ownership gaps</b><span>Where accountability becomes unclear or delayed.</span></li>
+            <li><b>Exception paths</b><span>How vendor, turnover, and maintenance issues surface.</span></li>
+            <li><b>Growth strain</b><span>Whether more properties require better systems or more people.</span></li>
+          </ul>
+          <p class="panel-note">The diagnosis gives a directional operational leakage estimate and a first area to review.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="leaks">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="label">Where revenue gets exposed</p>
+            <h2>Small leaks become operating rules when nobody names them.</h2>
+          </div>
+          <p>The work may still get done, but at a higher cost: more follow-up, slower resolution, more owner or guest escalations, and less room to grow without adding staff.</p>
+        </div>
+        <div class="leak-grid">
+          <article class="leak-card">
+            <div class="marker"></div>
+            <h3>Follow-up loops</h3>
+            <p>Teams lose time confirming status, completion, payment, access, and next steps across disconnected systems.</p>
+          </article>
+          <article class="leak-card">
+            <div class="marker"></div>
+            <h3>Unclear ownership</h3>
+            <p>Tasks stall because the responsible person, current state, or escalation path is not obvious.</p>
+          </article>
+          <article class="leak-card">
+            <div class="marker"></div>
+            <h3>Vendor exceptions</h3>
+            <p>Cleaning, maintenance, and turnover issues are often found after the guest, owner, or team already feels the impact.</p>
+          </article>
+          <article class="leak-card">
+            <div class="marker"></div>
+            <h3>Growth drag</h3>
+            <p>Adding properties forces more coordination instead of more leverage when the operating system is not ready.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="method">
+      <div class="container method-grid">
+        <div>
+          <p class="label">How Bates Operations frames the work</p>
+          <h2>Diagnose the leak before prescribing more tools.</h2>
+        </div>
+        <ul class="method-list">
+          <li><b>1</b><div><h3>Identify the pressure points</h3><p>Use the Operational Leak Diagnosis to locate the strongest source of operational drag.</p></div></li>
+          <li><b>2</b><div><h3>Review the biggest leak</h3><p>Translate the result into a practical operations review, focused on the workflow most likely to return time or control.</p></div></li>
+          <li><b>3</b><div><h3>Design the next operating move</h3><p>Prioritize the simplest system, handoff, or automation improvement before adding headcount.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <p class="label">Start here</p>
+          <h2>Run the 60-second Operational Leak Diagnosis.</h2>
+          <p>Answer five questions and get an instant directional estimate of annual revenue exposure, operational health, and the biggest leak to review first.</p>
+          <a class="button primary" href="#diagnosis" data-open-diagnosis>Start operational leak diagnosis</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="diagnosis-shell" id="diagnosis" aria-label="Operational Leak Diagnosis">
+      <div class="diagnosis-wrap">
+        <div class="diagnosis-head">
+          <div class="diagnosis-title">
+            <p class="label">Operational Leak Diagnosis</p>
+            <h2>Where is your operation leaking money?</h2>
+            <p>Take this 60-second STR/MTR diagnosis to estimate how much revenue may be at risk from manual coordination, missed handoffs, vendor exceptions, and scaling friction.</p>
+          </div>
+          <img class="diagnosis-logo" src="bates-operations-logo.png" alt="Bates Operations">
+        </div>
+        <div class="meta"><span class="pill">About 60 seconds</span><span class="pill">5 questions</span><span class="pill">Instant estimate</span></div>
+
+        <section id="assessment">
+          <form id="quiz">
+            <div class="quiz-card">
+              <div class="qnum">Question 1 of 5</div><div class="q">What is your approximate annual gross revenue?</div>
+              <div class="options">
+                <label class="opt"><input type="radio" name="revenue" value="125000"> Under $250K</label>
+                <label class="opt"><input type="radio" name="revenue" value="375000"> $250K-$500K</label>
+                <label class="opt"><input type="radio" name="revenue" value="750000"> $500K-$1M</label>
+                <label class="opt"><input type="radio" name="revenue" value="1500000"> $1M-$2M</label>
+                <label class="opt"><input type="radio" name="revenue" value="3500000"> $2M-$5M</label>
+                <label class="opt"><input type="radio" name="revenue" value="5000000"> $5M+</label>
+              </div>
+            </div>
+
+            <div class="quiz-card">
+              <div class="qnum">Question 2 of 5</div><div class="q">How much time does your team spend each week manually chasing updates, confirming completion, or moving information between systems?</div>
+              <div class="options">
+                <label class="opt"><input type="radio" name="manual" value="5"> Less than 2 hours</label>
+                <label class="opt"><input type="radio" name="manual" value="4"> 2-5 hours</label>
+                <label class="opt"><input type="radio" name="manual" value="3"> 5-10 hours</label>
+                <label class="opt"><input type="radio" name="manual" value="2"> 10-20 hours</label>
+                <label class="opt"><input type="radio" name="manual" value="1"> 20+ hours</label>
+              </div>
+            </div>
+
+            <div class="quiz-card">
+              <div class="qnum">Question 3 of 5</div><div class="q">How often are tasks delayed because ownership, status, or next steps are unclear?</div>
+              <div class="options">
+                <label class="opt"><input type="radio" name="handoffs" value="5"> Almost never</label>
+                <label class="opt"><input type="radio" name="handoffs" value="4"> Occasionally</label>
+                <label class="opt"><input type="radio" name="handoffs" value="3"> Weekly</label>
+                <label class="opt"><input type="radio" name="handoffs" value="2"> Several times per week</label>
+                <label class="opt"><input type="radio" name="handoffs" value="1"> Daily</label>
+              </div>
+            </div>
+
+            <div class="quiz-card">
+              <div class="qnum">Question 4 of 5</div><div class="q">When a cleaner, vendor, or maintenance task goes wrong, how is it usually caught?</div>
+              <div class="options">
+                <label class="opt"><input type="radio" name="vendors" value="5"> Automated alert or escalation</label>
+                <label class="opt"><input type="radio" name="vendors" value="4"> Central task system flags it</label>
+                <label class="opt"><input type="radio" name="vendors" value="3"> Someone manually checks</label>
+                <label class="opt"><input type="radio" name="vendors" value="2"> A guest or owner usually reports it</label>
+                <label class="opt"><input type="radio" name="vendors" value="1"> Usually after it has already created a problem</label>
+              </div>
+            </div>
+
+            <div class="quiz-card">
+              <div class="qnum">Question 5 of 5</div><div class="q">If you added 20 properties next month, how would your current operation handle it?</div>
+              <div class="options">
+                <label class="opt"><input type="radio" name="scale" value="5"> Current systems could handle it</label>
+                <label class="opt"><input type="radio" name="scale" value="4"> Some extra coordination, but manageable</label>
+                <label class="opt"><input type="radio" name="scale" value="3"> We would probably need another person</label>
+                <label class="opt"><input type="radio" name="scale" value="2"> We would definitely need more staff</label>
+                <label class="opt"><input type="radio" name="scale" value="1"> Operations would struggle significantly</label>
+              </div>
+            </div>
+
+            <button class="button primary form-submit" type="submit">Calculate my operational leak risk</button>
+            <div id="error" class="error">Please answer all 5 questions.</div>
+          </form>
+        </section>
+
+        <section id="result">
+          <div class="result-card">
+            <div class="qnum">Your diagnosis</div>
+            <h2 style="font-size:38px;margin-top:8px">Operational Leak Diagnosis Result</h2>
+            <div class="scoregrid">
+              <div class="metric"><div class="metric-label">Operational Health Score</div><div class="value" id="healthScore">-</div></div>
+              <div class="metric"><div class="metric-label">Leakage Level</div><div class="value" style="font-size:22px" id="tier">-</div></div>
+            </div>
+            <div class="metric-label">Estimated annual revenue exposure</div>
+            <div class="risk" id="riskRange">-</div>
+            <div class="metric"><div class="metric-label">Biggest Operational Leak</div><div class="value leak" style="font-size:24px" id="biggestLeak">-</div></div>
+            <p class="lead" id="summary">-</p>
+            <div class="result-actions">
+              <div class="metric-label" style="margin-bottom:8px">Next Step</div>
+              <h3>Review your biggest operational leak</h3>
+              <p class="lead" style="margin-top:0">Book a focused 15-minute Operations Leak Review.</p>
+              <a class="button primary" href="https://calendly.com/briannabates36/15-minute-free-consultation" target="_blank" rel="noopener noreferrer">Book my 15-minute Operations Leak Review</a>
+            </div>
+            <a class="button secondary" style="margin-top:10px" href="#" id="retake">Retake diagnosis</a>
+            <div class="fine">Directional estimate based on reported revenue and diagnosis responses; not an accounting audit or guarantee of actual financial loss. The $5M+ band uses $5M as a conservative calculation base.</div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Bates Operations</span>
+      <span>Operational Leak Diagnosis for STR and MTR teams</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+const diagnosis=document.getElementById('diagnosis');
+const assessment=document.getElementById('assessment');
+const result=document.getElementById('result');
+const form=document.getElementById('quiz');
+const error=document.getElementById('error');
+const get=(n)=>document.querySelector('input[name="'+n+'"]:checked');
+const fmt=(n)=>n>=1000000?'$'+(Math.round((n/1000000)*10)/10).toString().replace('.0','')+'M':'$'+Math.round(n/1000)+'K';
+
+document.querySelectorAll('[data-open-diagnosis]').forEach((trigger)=>{
+  trigger.addEventListener('click',(event)=>{
+    event.preventDefault();
+    diagnosis.classList.add('is-open');
+    assessment.style.display='block';
+    result.style.display='none';
+    window.setTimeout(()=>diagnosis.scrollIntoView({behavior:'smooth',block:'start'}),40);
+  });
+});
+
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const fields=['revenue','manual','handoffs','vendors','scale'];
+  for(const f of fields){if(!get(f)){error.style.display='block';return;}}
+  error.style.display='none';
+
+  const revenue=Number(get('revenue').value);
+  const scores={
+    'Manual Coordination & Admin':Number(get('manual').value),
+    'Team Handoffs & Accountability':Number(get('handoffs').value),
+    'Vendor / Turnover Exceptions':Number(get('vendors').value),
+    'Scaling Capacity':Number(get('scale').value)
+  };
+  const vals=Object.values(scores);
+  const health=Math.round((vals.reduce((a,b)=>a+b,0)/20)*100);
+
+  let tier,lo,hi,summary;
+  if(health>=85){tier='LOW LEAKAGE';lo=.005;hi=.015;summary='Your operation appears strong, but smaller inefficiencies can still compound at portfolio scale. The fastest opportunity is usually removing the remaining manual exceptions and duplicate coordination.';}
+  else if(health>=70){tier='MODERATE LEAKAGE';lo=.015;hi=.03;summary='Your core operation is working, but some human coordination may still be absorbing time, response speed, and growth capacity.';}
+  else if(health>=50){tier='HIGH LEAKAGE';lo=.03;hi=.06;summary='Your operation is functioning, but manual follow-up, handoffs, or exception management may be creating a meaningful operational tax.';}
+  else{tier='SIGNIFICANT LEAKAGE';lo=.06;hi=.10;summary='Your answers suggest that everyday execution may rely heavily on manual intervention, which can consume team capacity and make growth more expensive.';}
+
+  const biggest=Object.entries(scores).sort((a,b)=>a[1]-b[1])[0][0];
+  document.getElementById('healthScore').textContent=health+' / 100';
+  document.getElementById('tier').textContent=tier;
+  document.getElementById('riskRange').textContent=fmt(revenue*lo)+'-'+fmt(revenue*hi)+' / year';
+  document.getElementById('biggestLeak').textContent=biggest;
+  document.getElementById('summary').textContent=summary;
+  assessment.style.display='none';
+  result.style.display='block';
+  diagnosis.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+document.getElementById('retake').addEventListener('click',(event)=>{
+  event.preventDefault();
+  form.reset();
+  error.style.display='none';
+  result.style.display='none';
+  assessment.style.display='block';
+  diagnosis.scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
+</body>
+</html>
