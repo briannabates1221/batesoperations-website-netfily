@@ -3,9 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bates Operations | Operational Leak Diagnosis</title>
-<meta name="description" content="Bates Operations helps STR and MTR operators identify the manual handoffs, vendor exceptions, and scaling friction that put revenue and capacity at risk.">
+<title>Bates Operations | Operational Systems for STR and MTR Teams</title>
+<meta name="description" content="Bates Operations helps short-term and mid-term rental teams find missed handoffs, manual follow-up, vendor exceptions, and scaling friction. Get the free Operations Brief.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://batesoperations.com/">
 <link rel="icon" type="image/png" href="bates-operations-favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bates Operations | Operational Systems for STR and MTR Teams">
+<meta property="og:description" content="Find the operational handoffs, manual follow-up, and vendor exceptions that make growth expensive. Take the free Operational Leak Diagnosis.">
+<meta property="og:url" content="https://batesoperations.com/">
+<meta property="og:image" content="https://batesoperations.com/bates-operations-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bates Operations | Operational Systems for STR and MTR Teams">
+<meta name="twitter:description" content="Practical operations guidance for teams managing turnovers, vendors, dispatch, and follow-up.">
+<meta name="twitter:image" content="https://batesoperations.com/bates-operations-logo.png">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Bates Operations",
+  "url":"https://batesoperations.com/",
+  "logo":"https://batesoperations.com/bates-operations-logo.png",
+  "description":"Operational workflow diagnosis and systems guidance for short-term and mid-term rental teams managing handoffs, vendors, follow-up, and growth."
+}
+</script>
 <style>
 :root{
   --ink:#061a33;
@@ -220,6 +241,20 @@ h2{font-size:clamp(30px,4vw,48px);line-height:1.02;margin-bottom:0}
 }
 .cta-band h2{font-size:34px;margin-bottom:12px}
 .cta-band p{color:#d8e3ed;font-size:17px;margin-bottom:22px}
+.newsletter-section{padding:58px 0;background:var(--mist);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.newsletter-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.78fr);gap:38px;align-items:center}
+.newsletter-copy h2{max-width:700px;font-size:clamp(30px,4vw,44px)}
+.newsletter-copy p:not(.label){max-width:680px;color:var(--muted);font-size:17px}
+.newsletter-note{margin:14px 0 0;color:var(--muted);font-size:13px}
+.newsletter-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px;box-shadow:0 12px 30px rgba(6,26,51,.06)}
+.newsletter-card form{margin:0}
+.newsletter-card label{display:block;margin-bottom:7px;color:var(--navy);font-size:13px;font-weight:800}
+.newsletter-card input[type=email]{width:100%;min-height:48px;border:1px solid #b8c6d2;border-radius:6px;padding:12px 13px;background:#fff;color:var(--ink);font:inherit}
+.newsletter-card input[type=email]:focus{outline:3px solid rgba(216,173,37,.35);outline-offset:2px;border-color:var(--gold)}
+.newsletter-card .button{width:100%;margin-top:12px;border:0}
+.newsletter-card [name=bot-field]{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.newsletter-status{margin:0;color:#245d3b;font-size:16px;font-weight:750}
+.newsletter-status[hidden]{display:none}
 .diagnosis-shell{
   display:none;
   padding:72px 0 80px;
@@ -293,7 +328,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
   .nav{align-items:flex-start;flex-direction:column;padding:18px 0}
   .nav-links{width:100%;justify-content:space-between;gap:14px;overflow-x:auto;padding-bottom:4px}
   .hero{padding-top:48px}
-  .hero-grid,.section-heading,.method-grid{grid-template-columns:1fr}
+  .hero-grid,.section-heading,.method-grid,.newsletter-grid{grid-template-columns:1fr}
   .diagnostic-panel{max-width:560px}
   .leak-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -405,6 +440,28 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
           <li><b>2</b><div><h3>Review the biggest leak</h3><p>Translate the result into a practical operations review, focused on the workflow most likely to return time or control.</p></div></li>
           <li><b>3</b><div><h3>Design the next operating move</h3><p>Prioritize the simplest system, handoff, or automation improvement before adding headcount.</p></div></li>
         </ul>
+      </div>
+    </section>
+
+    <section class="newsletter-section" id="newsletter">
+      <div class="container newsletter-grid">
+        <div class="newsletter-copy">
+          <p class="label">Free Operations Brief</p>
+          <h2>Practical notes for the people who keep service work moving.</h2>
+          <p>The Bates Operations Brief is a free, occasional newsletter for owners, office managers, and operations leads managing turnovers, vendors, dispatch, and follow-up. Each note focuses on one practical way to reduce operational drag before adding more tools or staff.</p>
+          <p class="newsletter-note">One useful note at a time. No daily noise, no hype, and no obligation to book a call.</p>
+        </div>
+        <div class="newsletter-card">
+          <form id="newsletter-form" name="operations-brief" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?newsletter=success#newsletter">
+            <input type="hidden" name="form-name" value="operations-brief">
+            <div hidden><label>Do not fill this out if you are human: <input name="bot-field"></label></div>
+            <label for="newsletter-email">Work email</label>
+            <input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
+            <button class="button primary" type="submit">Join the free brief</button>
+          </form>
+          <p class="newsletter-note">You can unsubscribe at any time. Your email is used for the Operations Brief only.</p>
+          <p class="newsletter-status" id="newsletter-status" role="status" hidden>You are on the list. The next Operations Brief will land in your inbox.</p>
+        </div>
       </div>
     </section>
 
@@ -523,7 +580,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>Bates Operations</span>
-      <span>Operational Leak Diagnosis for STR and MTR teams</span>
+      <span><a href="#newsletter">Free Operations Brief</a> | Operational Leak Diagnosis for STR and MTR teams</span>
     </div>
   </footer>
 </div>
@@ -534,8 +591,16 @@ const assessment=document.getElementById('assessment');
 const result=document.getElementById('result');
 const form=document.getElementById('quiz');
 const error=document.getElementById('error');
+const newsletterForm=document.getElementById('newsletter-form');
+const newsletterStatus=document.getElementById('newsletter-status');
 const get=(n)=>document.querySelector('input[name="'+n+'"]:checked');
 const fmt=(n)=>n>=1000000?'$'+(Math.round((n/1000000)*10)/10).toString().replace('.0','')+'M':'$'+Math.round(n/1000)+'K';
+
+if(new URLSearchParams(window.location.search).get('newsletter')==='success'){
+  newsletterForm.hidden=true;
+  newsletterStatus.hidden=false;
+  newsletterStatus.focus?.();
+}
 
 document.querySelectorAll('[data-open-diagnosis]').forEach((trigger)=>{
   trigger.addEventListener('click',(event)=>{
