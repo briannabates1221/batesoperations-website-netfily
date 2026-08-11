@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bates Operations | Operational Systems for STR and MTR Teams</title>
-<meta name="description" content="Bates Operations helps short-term and mid-term rental teams find missed handoffs, manual follow-up, vendor exceptions, and scaling friction. Get the free Operations Brief.">
+<title>Bates Operations | The Operations Brief for STR and MTR Teams</title>
+<meta name="description" content="The Bates Operations Brief shares practical articles for short-term and mid-term rental teams managing dispatch, turnovers, vendors, follow-up, and growth.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://batesoperations.com/">
 <link rel="icon" type="image/png" href="bates-operations-favicon.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Bates Operations | Operational Systems for STR and MTR Teams">
-<meta property="og:description" content="Find the operational handoffs, manual follow-up, and vendor exceptions that make growth expensive. Take the free Operational Leak Diagnosis.">
+<meta property="og:title" content="Bates Operations | The Operations Brief for STR and MTR Teams">
+<meta property="og:description" content="Practical operations articles for teams managing dispatch, turnovers, vendors, follow-up, and growth, plus a free Operational Leak Diagnosis.">
 <meta property="og:url" content="https://batesoperations.com/">
 <meta property="og:image" content="https://batesoperations.com/bates-operations-logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bates Operations | Operational Systems for STR and MTR Teams">
-<meta name="twitter:description" content="Practical operations guidance for teams managing turnovers, vendors, dispatch, and follow-up.">
+<meta name="twitter:title" content="Bates Operations | The Operations Brief for STR and MTR Teams">
+<meta name="twitter:description" content="Practical operations articles for teams managing turnovers, vendors, dispatch, and follow-up.">
 <meta name="twitter:image" content="https://batesoperations.com/bates-operations-logo.png">
 <script type="application/ld+json">
 {
@@ -242,12 +242,22 @@ h2{font-size:clamp(30px,4vw,48px);line-height:1.02;margin-bottom:0}
 .cta-band h2{font-size:34px;margin-bottom:12px}
 .cta-band p{color:#d8e3ed;font-size:17px;margin-bottom:22px}
 .newsletter-section{padding:58px 0;background:var(--mist);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.newsletter-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.78fr);gap:38px;align-items:center}
-.newsletter-copy h2{max-width:700px;font-size:clamp(30px,4vw,44px)}
-.newsletter-copy p:not(.label){max-width:680px;color:var(--muted);font-size:17px}
+.brief-header{max-width:780px;margin-bottom:34px}
+.brief-header h2{max-width:700px;font-size:clamp(34px,4vw,52px)}
+.brief-header p:not(.label){max-width:720px;color:var(--muted);font-size:18px}
+.brief-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.78fr);gap:38px;align-items:start}
+.article-block>.label{margin-bottom:14px}
+.article-grid{display:grid;gap:14px}
+.article-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:19px 20px;box-shadow:0 10px 24px rgba(6,26,51,.045)}
+.article-card h3{margin-bottom:9px;font-size:20px;line-height:1.15}
+.article-card p{margin:0;color:var(--muted);font-size:15px}
+.article-card p+p{margin-top:10px}
+.article-answer{color:var(--ink)!important}
+.article-answer strong{color:var(--navy)}
 .newsletter-note{margin:14px 0 0;color:var(--muted);font-size:13px}
 .newsletter-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px;box-shadow:0 12px 30px rgba(6,26,51,.06)}
 .newsletter-card form{margin:0}
+.newsletter-card-title{margin:0 0 14px;color:var(--navy);font-size:20px;font-weight:850}
 .newsletter-card label{display:block;margin-bottom:7px;color:var(--navy);font-size:13px;font-weight:800}
 .newsletter-card input[type=email]{width:100%;min-height:48px;border:1px solid #b8c6d2;border-radius:6px;padding:12px 13px;background:#fff;color:var(--ink);font:inherit}
 .newsletter-card input[type=email]:focus{outline:3px solid rgba(216,173,37,.35);outline-offset:2px;border-color:var(--gold)}
@@ -328,7 +338,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
   .nav{align-items:flex-start;flex-direction:column;padding:18px 0}
   .nav-links{width:100%;justify-content:space-between;gap:14px;overflow-x:auto;padding-bottom:4px}
   .hero{padding-top:48px}
-  .hero-grid,.section-heading,.method-grid,.newsletter-grid{grid-template-columns:1fr}
+  .hero-grid,.section-heading,.method-grid,.brief-content{grid-template-columns:1fr}
   .diagnostic-panel{max-width:560px}
   .leak-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -357,6 +367,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#leaks">Leaks</a>
         <a href="#method">Method</a>
+        <a href="#operations-brief">Operations Brief</a>
         <a class="button primary" href="#diagnosis" data-open-diagnosis>Start diagnosis</a>
       </nav>
     </div>
@@ -443,16 +454,37 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
       </div>
     </section>
 
-    <section class="newsletter-section" id="newsletter">
-      <div class="container newsletter-grid">
-        <div class="newsletter-copy">
-          <p class="label">Free Operations Brief</p>
-          <h2>Practical notes for the people who keep service work moving.</h2>
-          <p>The Bates Operations Brief is a free, occasional newsletter for owners, office managers, and operations leads managing turnovers, vendors, dispatch, and follow-up. Each note focuses on one practical way to reduce operational drag before adding more tools or staff.</p>
-          <p class="newsletter-note">One useful note at a time. No daily noise, no hype, and no obligation to book a call.</p>
-        </div>
+    <section class="newsletter-section" id="operations-brief" aria-labelledby="brief-title">
+      <div class="container">
+        <header class="brief-header">
+          <p class="label">Free Newsletter + Field Notes</p>
+          <h2 id="brief-title">The Bates Operations Brief</h2>
+          <p>A free, occasional newsletter for owners, office managers, and operations leads managing turnovers, vendors, dispatch, and follow-up. Each issue answers one practical operations question in plain language, with a small next step you can test before adding more tools or staff.</p>
+        </header>
+        <div class="brief-content">
+          <div class="article-block">
+            <p class="label">Recent field notes</p>
+            <div class="article-grid">
+              <article class="article-card" id="article-dispatch-handoffs">
+                <h3>Where dispatch teams lose time between the call and the schedule</h3>
+                <p class="article-answer"><strong>Short answer:</strong> The gap usually sits between intake, scheduling, and status updates, where the same detail is copied across calls, texts, calendars, and work orders.</p>
+                <p>Start with one week of delayed jobs. Record the handoff, the owner, and the next action. Repeated re-entry is a candidate for a clearer checklist or system handoff, not automatically a new app.</p>
+              </article>
+              <article class="article-card" id="article-vendor-exceptions">
+                <h3>How to spot repeat vendor exceptions before they become customer problems</h3>
+                <p class="article-answer"><strong>Short answer:</strong> An exception becomes expensive when the team finds it after a customer, owner, or technician has already felt its impact.</p>
+                <p>Track repeat exceptions by source, time to notice, rework, and final owner. That pattern shows whether the first fix is better visibility, a vendor standard, or a clear escalation rule.</p>
+              </article>
+              <article class="article-card" id="article-responsible-automation">
+                <h3>When automation should support an operator, not replace one</h3>
+                <p class="article-answer"><strong>Short answer:</strong> Automate predictable updates and reminders; keep judgment, customer recovery, and unusual exceptions with a person.</p>
+                <p>An automation is ready when the trigger, owner, data, and fallback are clear. If the team cannot explain what happens when information is missing, document the workflow before automating it.</p>
+              </article>
+            </div>
+          </div>
         <div class="newsletter-card">
-          <form id="newsletter-form" name="operations-brief" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?newsletter=success#newsletter">
+          <p class="newsletter-card-title">Get the next brief</p>
+          <form id="newsletter-form" name="operations-brief" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?newsletter=success#operations-brief">
             <input type="hidden" name="form-name" value="operations-brief">
             <div hidden><label>Do not fill this out if you are human: <input name="bot-field"></label></div>
             <label for="newsletter-email">Work email</label>
@@ -461,6 +493,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
           </form>
           <p class="newsletter-note">You can unsubscribe at any time. Your email is used for the Operations Brief only.</p>
           <p class="newsletter-status" id="newsletter-status" role="status" hidden>You are on the list. The next Operations Brief will land in your inbox.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -580,7 +613,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>Bates Operations</span>
-      <span><a href="#newsletter">Free Operations Brief</a> | Operational Leak Diagnosis for STR and MTR teams</span>
+      <span><a href="#operations-brief">The Bates Operations Brief</a> | Operational Leak Diagnosis for STR and MTR teams</span>
     </div>
   </footer>
 </div>
