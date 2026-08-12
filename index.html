@@ -80,14 +80,6 @@ button,a.button{font:inherit}
 .nav-links{display:flex;align-items:center;gap:26px;color:var(--muted);font-size:15px;font-weight:650}
 .nav-links a{text-decoration:none;white-space:nowrap}
 .nav-links a:hover{color:var(--ink)}
-.nav-dropdown{position:relative}
-.nav-dropdown summary{cursor:pointer;list-style:none;white-space:nowrap}
-.nav-dropdown summary::-webkit-details-marker{display:none}
-.nav-dropdown summary:after{content:"▾";margin-left:6px;font-size:11px}
-.nav-dropdown[open] summary{color:var(--ink)}
-.service-menu{position:absolute;top:calc(100% + 14px);right:0;width:270px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 18px 40px rgba(6,26,51,.14)}
-.service-menu a{display:block;padding:11px 12px;white-space:normal;border-radius:5px;color:var(--ink);font-size:14px;line-height:1.25}
-.service-menu a:hover{background:var(--mist)}
 .button{
   display:inline-flex;
   align-items:center;
@@ -370,7 +362,6 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
   .container,.diagnosis-wrap{width:min(100% - 28px,1160px)}
   .brand-logo{width:220px}
   .nav-links a:not(.button){display:none}
-  .nav-dropdown .service-menu a{display:block}
   .hero-actions,.proof-row,.leak-grid,.scoregrid{grid-template-columns:1fr}
   .button{width:100%}
   .proof-row{display:grid}
@@ -392,16 +383,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#leaks">Leaks</a>
         <a href="#method">Method</a>
-        <details class="nav-dropdown">
-          <summary>Services</summary>
-          <div class="service-menu">
-            <a href="#service-vendor-turnaround">Vendor Turnaround Systems</a>
-            <a href="#service-quality-assurance">Quality Assurance Workflows</a>
-            <a href="#service-damage-maintenance">Damage and Maintenance Reporting</a>
-            <a href="#service-sops-ownership">SOPs and Task Ownership</a>
-            <a href="#service-lead-follow-up">Lead and Follow-Up Tracking</a>
-          </div>
-        </details>
+        <a href="#about">About</a>
         <a href="#operations-review">Operations Review</a>
         <a href="#operations-brief">Operations Brief</a>
         <a class="button primary" href="#diagnosis" data-open-diagnosis>Start diagnosis</a>
@@ -415,15 +397,14 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
         <div>
           <p class="eyebrow">Operational leak diagnosis</p>
           <h1>Find the handoffs that make growth expensive.</h1>
-          <p class="hero-copy">Bates Operations is built for boutique STR/MTR property managers and rental operators managing approximately 20-100 units—helping them spot the vendor coordination, quality-control gaps, and unclear ownership that quietly drain margin, response speed, and capacity.</p>
+          <p class="hero-copy">Bates Operations is built for boutique STR/MTR property managers and rental operators managing approximately 20-100 units—helping them see where coordination drags, quality checks happen too late, and routine work keeps returning to the same person.</p>
           <div class="hero-actions">
             <a class="button primary" href="#diagnosis" data-open-diagnosis>Start the diagnosis</a>
-            <a class="button secondary" href="https://calendly.com/briannabates36/15-minute-free-consultation" target="_blank" rel="noopener noreferrer">Book a 15-minute review</a>
           </div>
           <div class="proof-row" aria-label="Common operational pressure points">
-            <div class="proof"><strong>Manual coordination</strong><span>Updates, confirmations, and reminders that live in chats and inboxes.</span></div>
-            <div class="proof"><strong>Missed handoffs</strong><span>Work slows when ownership, status, or next steps are unclear.</span></div>
-            <div class="proof"><strong>Scaling friction</strong><span>Growth creates staffing pressure before systems are ready.</span></div>
+            <div class="proof"><strong>Follow-up load</strong><span>Updates, confirmations, and reminders that live in chats and inboxes.</span></div>
+            <div class="proof"><strong>Responsibility drift</strong><span>Work slows when the next owner or next action is hard to see.</span></div>
+            <div class="proof"><strong>Scaling pressure</strong><span>More properties add coordination before the operating rhythm is ready.</span></div>
           </div>
         </div>
         <aside class="diagnostic-panel" aria-label="Operational diagnosis preview">
@@ -442,6 +423,39 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
       </div>
     </section>
 
+    <section class="section alt" id="about">
+      <div class="container method-grid">
+        <div>
+          <p class="label">About Bates Operations</p>
+          <h2>Practical operations work starts with seeing the leak clearly.</h2>
+          <p style="margin-top:18px;color:var(--muted);font-size:18px">Operational work has a way of looking fine from a distance. Up close, the weak points show up in handoffs, follow-up, vendor exceptions, and the small decisions that keep landing on the same person.</p>
+          <p style="margin-top:16px;color:var(--muted);font-size:18px">Brianna Bates built Bates Operations around that practical view of operations. Her background includes [X years/roles in STR/MTR or property operations—add specifics here], where she learned how easily teams can stay busy while ownership, status, and next steps remain unclear. The Operational Leak Diagnosis is her framework for making those pressure points visible before the answer becomes another tool, another hire, or more late-night coordination.</p>
+          <p style="margin-top:16px;color:var(--muted);font-size:18px">This is early-stage work, and the framework is ready to be refined with a small number of founding clients. The goal is straightforward: have a useful conversation, identify the leak most worth addressing, and leave with a practical next move.</p>
+        </div>
+        <aside class="diagnostic-panel" aria-label="Brianna Bates headshot">
+          <div class="panel-logo">
+            <img src="/images/brianna-headshot.jpg" alt="Brianna Bates">
+          </div>
+          <p class="panel-title">Brianna Bates</p>
+          <p class="panel-note">Founder, Bates Operations</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="founding-client">
+      <div class="container">
+        <div class="cta-band">
+          <p class="label">Founding client opportunity</p>
+          <h2>Help shape the Operational Leak Diagnosis.</h2>
+          <p>I'm currently working with a small number of STR/MTR teams to refine this diagnosis — [X spots / free review / discounted rate]. If you're one of the first, [specific ask].</p>
+          <div class="service-offer">
+            <h3>What I’m asking for</h3>
+            <p>Honest feedback after the review and, only with your permission, the ability to describe what we learned in a future case study.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section alt" id="ideal-client">
       <div class="container">
         <div class="section-heading">
@@ -457,30 +471,13 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
     <section class="section" id="operations-review">
       <div class="container">
         <div class="cta-band">
-          <p class="label">Service offer</p>
-          <h2>Turn the biggest leak into a practical operations move.</h2>
-          <p>The 15-minute Operations Leak Review is a focused working session for boutique STR/MTR property managers and rental operators managing approximately 20-100 units. Bring one workflow and leave with a clear first improvement to test.</p>
-          <div class="service-offer" id="service-vendor-turnaround">
-            <h3>Vendor Turnaround Systems</h3>
-            <p>Design a repeatable process for assigning, confirming, quality-checking, and escalating cleaning, maintenance, and turnover work across a growing portfolio.</p>
+          <p class="label">The current offer</p>
+          <h2>Start with a real diagnostic conversation.</h2>
+          <p>The 15-minute Operations Leak Review is the deliverable right now: a focused conversation about one operational leak, what is creating it, and what to test next. It is not a packaged service catalog or a promise of a particular follow-on project.</p>
+          <div class="service-offer">
+            <h3>What happens after the review?</h3>
+            <p>The review itself is the deliverable. If there is a clear mutual fit for follow-on work, we can discuss [describe what a follow-on engagement could look like, if applicable]. Nothing is assumed beyond the conversation.</p>
           </div>
-          <div class="service-offer" id="service-quality-assurance">
-            <h3>Quality Assurance Workflows</h3>
-            <p>Create consistent inspection, exception logging, rework, and sign-off steps so issues are caught before guests, owners, or team members feel the impact.</p>
-          </div>
-          <div class="service-offer" id="service-damage-maintenance">
-            <h3>Damage and Maintenance Reporting</h3>
-            <p>Standardize how damage, maintenance needs, photos, priorities, owners, and next steps are reported so issues move quickly from discovery to resolution.</p>
-          </div>
-          <div class="service-offer" id="service-sops-ownership">
-            <h3>SOPs and Task Ownership</h3>
-            <p>Clarify the standard way work gets done, who owns each step, and when an issue should be handed off or escalated.</p>
-          </div>
-          <div class="service-offer" id="service-lead-follow-up">
-            <h3>Lead and Follow-Up Tracking</h3>
-            <p>Create a simple system for capturing inquiries, assigning next steps, tracking response status, and keeping opportunities from going quiet.</p>
-          </div>
-          <a class="button primary" href="https://calendly.com/briannabates36/15-minute-free-consultation" target="_blank" rel="noopener noreferrer">Book a 15-minute Operations Leak Review</a>
         </div>
       </div>
     </section>
@@ -594,7 +591,7 @@ input[type=radio]{margin-top:3px;accent-color:var(--gold)}
           <div class="diagnosis-title">
             <p class="label">Operational Leak Diagnosis</p>
             <h2>Where is your operation leaking money?</h2>
-            <p>Take this 75-second diagnosis for boutique STR/MTR property managers and rental operators to estimate how much revenue may be at risk from manual coordination, missed handoffs, vendor exceptions, and scaling friction.</p>
+            <p>Take this 75-second diagnosis for boutique STR/MTR property managers and rental operators to estimate how much revenue may be at risk when teams are chasing updates, discovering exceptions late, or stretching workflows beyond their current capacity.</p>
           </div>
           <img class="diagnosis-logo" src="bates-operations-logo.png" alt="Bates Operations">
         </div>
@@ -746,10 +743,6 @@ if(reduceMotion||!('IntersectionObserver' in window)){
   },{threshold:.12,rootMargin:'0px 0px -40px'});
   revealTargets.forEach((element)=>revealObserver.observe(element));
 }
-document.querySelectorAll('.service-menu a').forEach((link)=>link.addEventListener('click',()=>{
-  link.closest('details').open=false;
-}));
-
 if(new URLSearchParams(window.location.search).get('newsletter')==='success'){
   newsletterForm.hidden=true;
   newsletterStatus.hidden=false;
