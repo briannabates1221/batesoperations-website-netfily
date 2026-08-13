@@ -43,6 +43,38 @@ const readCases = () => fs.readdirSync(contentDir)
   .map((fileName) => parseFrontmatter(fs.readFileSync(path.join(contentDir, fileName), 'utf8'), fileName))
   .sort((a, b) => a.title.localeCompare(b.title));
 
+const diagrams = {
+  'dispatch-handoff-gaps': {
+    heading: 'The handoff Bates Operations would examine',
+    stages: [
+      ['Service request', 'Capture the essential details'],
+      ['Schedule', 'Connect the request to the correct time window'],
+      ['Accountable owner', 'Make the next responsible person visible'],
+      ['Completion or exception', 'Close the loop or escalate the blocked work']
+    ]
+  },
+  'vendor-exception-visibility': {
+    heading: 'From isolated exception to visible pattern',
+    stages: [
+      ['Capture', 'Record the exception while details are fresh'],
+      ['Categorize', 'Group by property, vendor, issue type, and urgency'],
+      ['Look for repeat patterns', 'Identify issues that are no longer isolated'],
+      ['Assign the next move', 'Vendor follow-up, process change, or quality check'],
+      ['Escalate when necessary', 'Protect the next turnover or guest experience']
+    ]
+  },
+  'scaling-coordination-drag': {
+    heading: 'How growth creates coordination drag',
+    stages: [
+      ['Portfolio growth', 'More properties and more operating variables'],
+      ['More requests', 'More owner, vendor, maintenance, and turnover activity'],
+      ['More exceptions', 'More situations requiring judgment or follow-up'],
+      ['Coordination drag', 'Routine questions and decisions return to the same person'],
+      ['Operating clarity', 'Separate routine work, visible ownership, and clear escalation']
+    ]
+  }
+};
+
 const pageHead = (entry, isIndex = false) => {
   const pageUrl = isIndex ? `${siteUrl}/case-studies` : `${siteUrl}/case-studies/${entry.slug}`;
   const title = isIndex ? 'Illustrative Case Studies | Bates Operations' : `${entry.title} | Bates Operations`;
@@ -67,10 +99,16 @@ const footer = `<footer class="site-footer"><div class="container footer-inner">
 
 const card = (entry) => `<article class="article-card"><p class="scenario-label">Illustrative scenario — not a specific client</p><h2><a href="/case-studies/${entry.slug}">${escapeHtml(entry.title)}</a></h2><p>${escapeHtml(entry.summary)}</p><p><a class="button secondary" href="/case-studies/${entry.slug}">Read the scenario</a></p></article>`;
 
+const renderDiagram = (entry) => {
+  const diagram = diagrams[entry.slug];
+  if (!diagram) throw new Error(`${entry.slug}: missing operating-pattern diagram`);
+  return `<figure class="case-study-visual" aria-labelledby="pattern-title-${entry.slug}"><figcaption class="label">Operating pattern</figcaption><h2 id="pattern-title-${entry.slug}">${escapeHtml(diagram.heading)}</h2><ol class="pattern-flow">${diagram.stages.map(([label, detail]) => `<li><span class="pattern-number" aria-hidden="true"></span><div><h3>${escapeHtml(label)}</h3><p>${escapeHtml(detail)}</p></div></li>`).join('')}</ol></figure>`;
+};
+
 const renderArticle = (entry) => `${pageHead(entry)}
 <body><div class="site-shell">${header}<main>
 <section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/case-studies">Case studies</a></li><li aria-current="page">${escapeHtml(entry.title)}</li></ol></nav><p class="label">Illustrative scenario — not a specific client</p><h1>${escapeHtml(entry.title)}</h1><p>${escapeHtml(entry.summary)}</p></div></section>
-<article class="section"><div class="container content-copy article-body"><p class="content-note"><strong>Illustrative scenario — not a specific client.</strong> This hypothetical example uses broad, non-identifying context. It is not a testimonial, verified case study, or report of completed client work.</p>${renderMarkdown(entry.body)}<p><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a> <a class="button secondary" href="/contact">Ask a question</a></p></div></article>
+<article class="section"><div class="container"><p class="content-note"><strong>Illustrative scenario — not a specific client.</strong> This hypothetical example uses broad, non-identifying context. It is not a testimonial, verified case study, or report of completed client work.</p><div class="case-study-layout"><div class="content-copy article-body">${renderMarkdown(entry.body)}</div>${renderDiagram(entry)}</div><p class="case-study-actions"><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a> <a class="button secondary" href="/contact">Ask a question</a></p></div></article>
 <section class="section related-section" aria-labelledby="case-study-next"><div class="container"><div class="section-heading"><div><p class="label">Continue exploring</p><h2 id="case-study-next">Other illustrative scenarios</h2></div><p>These examples are designed to make the operating patterns easier to recognize before a real review.</p></div><div class="article-grid">${readCases().filter((candidate) => candidate.slug !== entry.slug).map(card).join('')}</div></div></section>
 </main>${footer}</div><script src="/site.js" defer></script></body></html>`;
 
