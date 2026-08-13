@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://batesoperations.com/</loc>
-  </url>
+  <url><loc>https://batesoperations.com/</loc></url>
+  <url><loc>https://batesoperations.com/about</loc></url>
+  <url><loc>https://batesoperations.com/diagnosis</loc></url>
+  <url><loc>https://batesoperations.com/field-notes</loc></url>
+  <url><loc>https://batesoperations.com/pricing</loc></url>
+  <url><loc>https://batesoperations.com/contact</loc></url>
+  <url><loc>https://batesoperations.com/field-notes/vendor-exceptions</loc></url>
+  <url><loc>https://batesoperations.com/field-notes/responsible-automation</loc></url>
+  <url><loc>https://batesoperations.com/field-notes/dispatch-handoffs</loc></url>
 </urlset>
