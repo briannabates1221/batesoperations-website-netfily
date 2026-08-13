@@ -5,6 +5,8 @@ const root = __dirname;
 const contentDir = path.join(root, 'content', 'case-studies');
 const outputDir = path.join(root, 'case-studies');
 const siteUrl = 'https://batesoperations.com';
+const scenarioLabel = 'Illustrative scenario — hypothetical, not client work';
+const scenarioNote = 'Hypothetical example — not client work. This is an educational scenario, not a testimonial, verified case study, or report of completed client work.';
 
 const escapeHtml = (value) => String(value)
   .replace(/&/g, '&amp;')
@@ -77,11 +79,11 @@ const diagrams = {
 
 const pageHead = (entry, isIndex = false) => {
   const pageUrl = isIndex ? `${siteUrl}/case-studies` : `${siteUrl}/case-studies/${entry.slug}`;
-  const title = isIndex ? 'Illustrative Case Studies | Bates Operations' : `${entry.title} | Bates Operations`;
+  const title = isIndex ? 'Case Studies | Bates Operations' : `${entry.title} | Bates Operations`;
   const description = isIndex
     ? 'Illustrative, hypothetical STR/MTR operations scenarios covering dispatch handoffs, vendor exceptions, and scaling coordination.'
     : entry.summary;
-  const ogType = 'article';
+  const ogType = isIndex ? 'website' : 'article';
   return `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(title)}</title>
@@ -95,9 +97,9 @@ ${isIndex ? `<script type="application/ld+json">${JSON.stringify({'@context':'ht
 };
 
 const header = `<header class="site-header"><div class="container nav"><a class="brand-link" href="/" aria-label="Bates Operations home"><img class="brand-logo" src="/bates-operations-logo.png" alt="Bates Operations"></a><nav class="nav-links" aria-label="Primary navigation"><a href="/about">About</a><a href="/diagnosis">Diagnosis</a><a href="/field-notes">Field notes</a><a href="/case-studies" aria-current="page">Case studies</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a><a class="button primary" href="/diagnosis">Start the diagnosis</a></nav></div></header>`;
-const footer = `<footer class="site-footer"><div class="container footer-inner"><span>Bates Operations</span><span class="footer-links"><a href="/">Home</a><a href="/about">About</a><a href="/diagnosis">Diagnosis</a><a href="/field-notes">Field notes</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a></span></div></footer>`;
+const footer = `<footer class="site-footer"><div class="container footer-inner"><span>Bates Operations</span><span class="footer-links"><a href="/">Home</a><a href="/about">About</a><a href="/diagnosis">Diagnosis</a><a href="/field-notes">Field notes</a><a href="/case-studies">Case studies</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a></span></div></footer>`;
 
-const card = (entry) => `<article class="article-card"><p class="scenario-label">Illustrative scenario — not a specific client</p><h2><a href="/case-studies/${entry.slug}">${escapeHtml(entry.title)}</a></h2><p>${escapeHtml(entry.summary)}</p><p><a class="button secondary" href="/case-studies/${entry.slug}">Read the scenario</a></p></article>`;
+const card = (entry) => `<article class="article-card"><p class="scenario-label">${scenarioLabel}</p><h2><a href="/case-studies/${entry.slug}">${escapeHtml(entry.title)}</a></h2><p>${escapeHtml(entry.summary)}</p><p><a class="button secondary" href="/case-studies/${entry.slug}">View the scenario</a></p></article>`;
 
 const renderDiagram = (entry) => {
   const diagram = diagrams[entry.slug];
@@ -107,15 +109,15 @@ const renderDiagram = (entry) => {
 
 const renderArticle = (entry) => `${pageHead(entry)}
 <body><div class="site-shell">${header}<main>
-<section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/case-studies">Case studies</a></li><li aria-current="page">${escapeHtml(entry.title)}</li></ol></nav><p class="label">Illustrative scenario — not a specific client</p><h1>${escapeHtml(entry.title)}</h1><p>${escapeHtml(entry.summary)}</p></div></section>
-<article class="section"><div class="container"><p class="content-note"><strong>Illustrative scenario — not a specific client.</strong> This hypothetical example uses broad, non-identifying context. It is not a testimonial, verified case study, or report of completed client work.</p><div class="case-study-layout"><div class="content-copy article-body">${renderMarkdown(entry.body)}</div>${renderDiagram(entry)}</div><p class="case-study-actions"><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a> <a class="button secondary" href="/contact">Ask a question</a></p></div></article>
-<section class="section related-section" aria-labelledby="case-study-next"><div class="container"><div class="section-heading"><div><p class="label">Continue exploring</p><h2 id="case-study-next">Other illustrative scenarios</h2></div><p>These examples are designed to make the operating patterns easier to recognize before a real review.</p></div><div class="article-grid">${readCases().filter((candidate) => candidate.slug !== entry.slug).map(card).join('')}</div></div></section>
+<section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/case-studies">Case studies</a></li><li aria-current="page">${escapeHtml(entry.title)}</li></ol></nav><p class="label">Illustrative case study</p><h1>${escapeHtml(entry.title)}</h1><p>${escapeHtml(entry.summary)}</p></div></section>
+<article class="section"><div class="container"><p class="content-note"><strong>${scenarioNote}</strong> The context stays broad and non-identifying so the operating pattern is clear without suggesting a real client engagement.</p><div class="case-study-layout"><div class="content-copy article-body">${renderMarkdown(entry.body)}</div>${renderDiagram(entry)}</div><p class="case-study-actions"><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a> <a class="button secondary" href="/contact">Ask a question</a></p></div></article>
+<section class="section related-section" aria-labelledby="case-study-next"><div class="container"><div class="section-heading"><div><p class="label">Continue exploring</p><h2 id="case-study-next">More operating scenarios</h2></div><p>Use these hypothetical examples to recognize the kinds of handoffs, exceptions, and growth friction the diagnosis can examine.</p></div><div class="article-grid">${readCases().filter((candidate) => candidate.slug !== entry.slug).map(card).join('')}</div></div></section>
 </main>${footer}</div><script src="/site.js" defer></script></body></html>`;
 
 const renderIndex = (entries) => `${pageHead({}, true)}
 <body><div class="site-shell">${header}<main>
-<section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Case studies</li></ol></nav><p class="label">Illustrative case studies</p><h1>Operational patterns worth seeing before they become expensive.</h1><p>These hypothetical scenarios show how an Operations Leak Diagnosis might examine dispatch handoffs, vendor exceptions, and scaling coordination. None describes a specific client or completed engagement.</p></div></section>
-<section class="section"><div class="container"><div class="article-grid">${entries.map(card).join('')}</div><p class="content-note"><strong>Important context:</strong> The scenarios on this page are illustrative only. Real client evidence will be added only after completed work, permission, and supporting documentation exist.</p><p><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a></p></div></section>
+<section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Case studies</li></ol></nav><p class="label">Case studies</p><h1>Case studies</h1><p>Operational patterns worth seeing before they become expensive. These hypothetical scenarios show how an Operations Leak Diagnosis might examine dispatch handoffs, vendor exceptions, and scaling coordination.</p></div></section>
+<section class="section"><div class="container"><div class="article-grid">${entries.map(card).join('')}</div><p class="content-note"><strong>Important context:</strong> Every scenario above is hypothetical and not client work. Real client evidence will be added only after completed work, permission, and supporting documentation exist.</p><p><a class="button primary" href="/diagnosis">Start the Operational Leak Diagnosis</a></p></div></section>
 </main>${footer}</div><script src="/site.js" defer></script></body></html>`;
 
 const entries = readCases();

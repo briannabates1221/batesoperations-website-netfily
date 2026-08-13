@@ -151,9 +151,10 @@ form.addEventListener('submit', (event) => {
     document.getElementById('biggestLeak').textContent = biggest;
     document.getElementById('summary').textContent = summary;
     document.getElementById('nextStepTitle').textContent = primaryFit ? 'Review your biggest operational leak' : 'Use this as a directional self-assessment';
+    document.getElementById('bookReview').textContent = 'Book a 15-minute diagnosis conversation';
     document.getElementById('nextStepCopy').textContent = primaryFit
-      ? 'The review itself is a focused 15-minute diagnostic conversation.'
-      : 'The Operations Leak Review is designed primarily for boutique operators managing approximately 20-100 units.';
+      ? 'The conversation itself is a focused 15-minute diagnostic working session.'
+      : 'The diagnosis conversation is designed primarily for boutique operators managing approximately 20-100 units.';
     document.getElementById('bookReview').style.display = primaryFit ? 'inline-flex' : 'none';
     document.getElementById('diagnosis-copy-summary').value = `${healthLabel}; ${tier}; ${biggest}; ${revenue === null ? 'revenue skipped' : 'exposure estimated'}`;
     assessment.style.display = 'none';

@@ -74,8 +74,8 @@ const pageHead = (article) => `<!DOCTYPE html>
 })}</script>
 <link rel="stylesheet" href="/styles.css"></head>`;
 
-const header = `<header class="site-header"><div class="container nav"><a class="brand-link" href="/" aria-label="Bates Operations home"><img class="brand-logo" src="/bates-operations-logo.png" alt="Bates Operations"></a><nav class="nav-links" aria-label="Primary navigation"><a href="/about">About</a><a href="/diagnosis">Diagnosis</a><a href="/field-notes" aria-current="page">Field notes</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a><a class="button primary" href="/diagnosis">Start the diagnosis</a></nav></div></header>`;
-const footer = `<footer class="site-footer"><div class="container footer-inner"><span>Bates Operations</span><span class="footer-links"><a href="/">Home</a><a href="/field-notes">All field notes</a><a href="/contact">Contact</a></span></div></footer>`;
+const header = `<header class="site-header"><div class="container nav"><a class="brand-link" href="/" aria-label="Bates Operations home"><img class="brand-logo" src="/bates-operations-logo.png" alt="Bates Operations"></a><nav class="nav-links" aria-label="Primary navigation"><a href="/about">About</a><a href="/diagnosis">Diagnosis</a><a href="/field-notes" aria-current="page">Field notes</a><a href="/case-studies">Case studies</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a><a class="button primary" href="/diagnosis">Start the diagnosis</a></nav></div></header>`;
+const footer = `<footer class="site-footer"><div class="container footer-inner"><span>Bates Operations</span><span class="footer-links"><a href="/">Home</a><a href="/field-notes">All field notes</a><a href="/case-studies">Case studies</a><a href="/contact">Contact</a></span></div></footer>`;
 
 const relatedMarkup = (article, articles) => {
   const related = articles.filter((candidate) => candidate.slug !== article.slug).slice(0, 2);
@@ -99,6 +99,7 @@ for (const article of articles) {
   fs.writeFileSync(path.join(directory, 'index.html'), renderArticle(article, articles));
 }
 fs.writeFileSync(path.join(outputDir, 'index.html'), renderIndex(articles));
-const sitemapRoutes = ['', 'about', 'diagnosis', 'field-notes', 'pricing', 'contact', ...articles.map((article) => `field-notes/${article.slug}`)];
+const caseStudySlugs = fs.readdirSync(path.join(root, 'content', 'case-studies')).filter((fileName) => fileName.endsWith('.mdx')).map((fileName) => fileName.replace(/\.mdx$/, ''));
+const sitemapRoutes = ['', 'about', 'diagnosis', 'field-notes', 'case-studies', 'pricing', 'contact', ...articles.map((article) => `field-notes/${article.slug}`), ...caseStudySlugs.map((slug) => `case-studies/${slug}`)];
 fs.writeFileSync(path.join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapRoutes.map((route) => `  <url><loc>${siteUrl}/${route}</loc></url>`).join('\n')}\n</urlset>\n`);
 console.log(`Generated ${articles.length} field notes from ${path.relative(root, contentDir)}.`);
