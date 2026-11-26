@@ -1,0 +1,9 @@
+{
+  "name": "bates-operations-site",
+  "private": true,
+  "description": "Bates Operations website. Static HTML plus one optional Netlify Function for the AI chat answers.",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0"
+  }
+}

@@ -1,0 +1,62 @@
+# Bates Operations
+
+> Bates Operations writes done-for-you OSHA written hazard communication (HazCom) programs for small roofing contractors in states under federal OSHA. The $149 HazCom Update Pack includes a written program, a chemical list built from the client's safety data sheets, a container label guide, a training sign-off sheet and a HazCom 2024 update check, delivered as Word and PDF within 48 hours of a complete intake. Owner: Brianna Bates, Killeen, Texas. Phone: 469-891-6699. Email: hello@batesoperations.com. Not affiliated with OSHA; not legal advice.
+
+Last updated: 2026-11-26
+
+## Pages
+- [Home](https://batesoperations.com/): what the pack is and who it's for
+- [HazCom Update Pack](https://batesoperations.com/hazcom-update-pack.html): contents, process, price ($149), what the client provides
+- [HazCom FAQ for roofers](https://batesoperations.com/faq.html): written program requirements, the 2024 update, SDS access on jobsites
+- [About](https://batesoperations.com/about.html): owner, approach, what we don't do
+- [Request a pack](https://batesoperations.com/contact.html): order or ask a question
+- [Sample program PDF](https://batesoperations.com/downloads/sample-hazcom-program-example-roofing-co.pdf): a finished program for a fictional roofing company
+
+## Key facts
+- Price: $149 one time, no subscription
+- Turnaround: within 48 hours after a completed intake form and SDSs
+- Service area: United States, states where private employers fall under federal OSHA
+- Rules covered: 29 CFR 1926.59 and 29 CFR 1910.1200 (as revised May 20, 2024; compliance dates amended January 15, 2026)
+
+## FAQ
+### Do roofing contractors need a written hazard communication program?
+Yes, if employees may be exposed to hazardous chemicals at work, under normal use or in a foreseeable emergency. OSHA's construction standard, 29 CFR 1926.59, applies the Hazard Communication Standard, 29 CFR 1910.1200. Paragraph (e)(1) requires employers to develop, implement and maintain a written hazard communication program. Roofers commonly work with roof primers, adhesives, sealants, coatings, roof cement, solvents, gasoline, diesel, propane and aerosol cans, so most roofing companies with employees are covered.
+
+### What has to be in a written HazCom program?
+Under 1910.1200(e), the program must describe how you handle labels and other warnings, safety data sheets, and employee information and training. It must also include: A list of the hazardous chemicals in the workplace, using product identifiers that match the SDS How you tell employees about the hazards of non-routine tasks and chemicals in unlabeled pipes On shared jobsites, how you give other employers SDS access, explain your labels and share precautions The program must be available on request to employees, their designated representatives and OSHA.
+
+### What changed in the 2024 HazCom update, and what was due November 20, 2026?
+OSHA published a revised Hazard Communication Standard on May 20, 2024 to align with GHS Revision 7. It changes how chemical makers classify some hazards, adds new categories such as non-flammable aerosols and chemicals under pressure, and adds rules for small container labels. By November 20, 2026, employers had to update workplace labels, the written program and training, as necessary, for substances whose hazard information changed. For mixtures, the employer date is May 19, 2028. OSHA moved these dates back four months in a rule published January 15, 2026.
+
+### Does the 2024 update mean I have to retrain my whole crew?
+Not automatically. Training is required when an employee is first assigned and whenever a new chemical hazard is introduced to their work area. If an updated SDS shows a new hazard for a product your crew uses, train them on that hazard. NAHB notes the 2024 update does not call for the comprehensive retraining the 2012 update did.
+
+### Can I just download a free HazCom template?
+You can start from one, but a template only becomes your program once it describes what your company actually does: your products, where your SDSs are kept, how you label containers and how you work with other contractors. A generic document that doesn't match your practice isn't a complete program. That fill-in work is what our pack does for you.
+
+### Where do I keep the written program and SDSs if my crews move between jobsites?
+OSHA allows a company whose employees travel between workplaces during a shift to keep the written program at the primary workplace facility, such as your office or shop. SDSs may be kept there too, as long as employees can get the information immediately in an emergency. Many roofers also keep a binder or phone access on each truck.
+
+### Can safety data sheets be on a phone or tablet instead of paper?
+Yes. OSHA allows electronic access to SDSs as long as there are no barriers to immediate access for employees on every shift. A dead phone or no signal on a roof is a barrier, so have a backup.
+
+### Do products bought at a hardware store count?
+Usually yes. The consumer product exemption only applies when you use the product for the purpose the manufacturer intended, and your employees' exposure is no longer or more frequent than a typical consumer's. A crew using caulk or spray adhesive all day, every day, generally doesn't meet that test.
+
+### Will this pack get me approved on ISNetworld or Avetta?
+Prequalification platforms and general contractors often ask for a written HazCom program, and this pack gives you one written around your company. Each platform and client sets its own review rules, so we can't promise an approval or a score.
+
+### How much does it cost and how fast is it?
+The HazCom Update Pack is $149, one time. It's delivered within 48 hours after we receive your completed intake form and SDSs, as an editable Word file and a PDF.
+
+### Do you work with contractors in every state?
+We currently serve roofing contractors in states where private employers fall under federal OSHA. States with their own approved plan, such as California, can have different rules and dates, so we don't write programs for them yet.
+
+### Are you OSHA? Is this legal advice?
+No. Bates Operations is a private business and is not affiliated with OSHA. We prepare documents from information you provide. They are not legal advice or a workplace inspection, and you remain responsible for implementing the program, training employees and keeping it current.
+
+## Primary sources
+- [OSHA, 29 CFR 1910.1200 Hazard Communication](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200)
+- [OSHA, 29 CFR 1926.59 Hazard Communication (construction)](https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.59)
+- [Federal Register, Jan 15, 2026, HazCom compliance dates rule (2026-00653)](https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00653.htm)
+- [OSHA, State Plans](https://www.osha.gov/stateplans)
