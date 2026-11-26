@@ -27,7 +27,7 @@
 .bo-chat-note{margin:0;padding:0 14px 10px;font-size:12px;color:var(--mut)}
 .bo-typing{font-style:italic;color:var(--mut)}
 @media (max-width:520px){
- .bo-chat{right:0;bottom:0;width:100vw;max-width:100vw;height:100dvh;border-radius:0;border:0}
+ .bo-chat{left:0;right:0;bottom:0;width:auto;max-width:none;height:100dvh;border-radius:0;border:0}
  .bo-chat-btn{right:12px;bottom:12px}
 }
 @media print{.bo-chat,.bo-chat-btn{display:none!important}}
