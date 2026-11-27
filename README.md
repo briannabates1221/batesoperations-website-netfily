@@ -18,7 +18,7 @@ Plain HTML site for the $149 HazCom Update Pack, with a buyer chat bot. Netlify 
 4. Redeploy. Never put the key in this repo.
 
 ## Before taking orders
-1. Create the mailbox hello@batesoperations.com (it's on every page, in llms.txt and the schema).
+1. Business email on the site: brianna@batesoperations.com (every page, llms.txt and the schema).
 2. Payment: there's no checkout. Orders go through `contact.html`; terms and payment details go out with the order confirmation.
 3. Request form: it opens the visitor's email app. Netlify Forms can collect submissions instead.
 4. Terms of service: the site says they're being finalized with an attorney. Keep that true.
